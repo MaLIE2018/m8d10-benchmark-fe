@@ -1,25 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useContext, useEffect } from "react";
+import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
+import "./App.css";
+import Inside from "./components/Inside";
+import { LoginContext } from "./components/LoginContext";
+import NavBar from "./components/NavBar";
+import Welcome from "./components/Welcome";
+import { getRequest } from "./lib/axios";
 
 function App() {
+  const { logged, setLogged, setUser, user } = useContext(LoginContext);
+
+  const isLogged = async () => {
+    try {
+      const data = await getRequest(`users/me`);
+      if (data.status === 200) {
+        setLogged(true);
+        setUser(data.data);
+      }
+    } catch (error) {
+      if (error.response.status === 401) {
+        setLogged(false);
+      } else {
+        setLogged(true);
+      }
+    }
+  };
+  useEffect(() => {
+    isLogged();
+  }, [logged]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <NavBar />
+      {logged ?? <Redirect to='/welcome/login' />}
+      <Route path='/welcome/login' exact component={Welcome} />
+      <Route path='/accommodations' exact component={Inside} />
+    </Router>
   );
 }
 
