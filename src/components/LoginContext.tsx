@@ -1,13 +1,13 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
-import { User } from "../types";
+import { initialUser, User } from "../types";
 
 type loginContext = {
   logged: boolean;
   newCustomer: boolean;
   setLogged: Dispatch<SetStateAction<boolean>>;
   setNewCustomer: Dispatch<SetStateAction<boolean>>;
-  user: User | null;
-  setUser: Dispatch<SetStateAction<User | null>>;
+  user: User;
+  setUser: Dispatch<SetStateAction<User>>;
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   update: boolean;
@@ -22,7 +22,7 @@ export const LoginProvider: React.FC = ({ children }) => {
   const [logged, setLogged] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [newCustomer, setNewCustomer] = useState<boolean>(false);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User>(initialUser);
   const [update, setUpdate] = useState<boolean>(false);
 
   return (

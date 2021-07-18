@@ -1,25 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Button, Col, Container, ListGroup, Row } from "react-bootstrap";
-import { getRequest } from "../lib/axios";
+import { Button, Col, Row } from "react-bootstrap";
 import { Accommodation } from "../types";
-import { LoginContext } from "./LoginContext";
-const MyAccommodations = () => {
-  const [accs, setAccs] = useState<Accommodation[] | []>([]);
-  const { setOpen } = useContext(LoginContext);
+import AccList from "./AccList/AccList";
+import withSubscription from "./hoc/withSubscription";
 
-  const getAccs = async () => {
-    try {
-      const res = await getRequest("users/me/accommodations");
-      if (res.status === 200) {
-        setAccs(res.data);
-      }
-    } catch (error) {}
-  };
-  useEffect(() => {
-    getAccs();
-  }, []);
+const MyAccommodations = ({
+  accs,
+  setOpen,
+}: {
+  accs: Accommodation[];
+  setOpen: Function;
+}) => {
   return (
-    <Container fluid='md'>
+    <>
       <Row>
         <Col>
           <h1>My Accommodations</h1>
@@ -31,18 +23,12 @@ const MyAccommodations = () => {
         </Col>
       </Row>
       <Row>
-        <ListGroup>
-          {accs.map((acc) => (
-            <ListGroup.Item>
-              {acc.name}
-              {acc.description}
-              {acc.location.location}
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
+        <Col>
+          <AccList accommodations={accs} />
+        </Col>
       </Row>
-    </Container>
+    </>
   );
 };
 
-export default MyAccommodations;
+export default withSubscription(MyAccommodations, "users/me/accommodations");

@@ -8,7 +8,7 @@ import { LoginContext } from "./LoginContext";
 const Login: React.FC<RouteComponentProps> = ({ history }) => {
   const user = useRef<HTMLInputElement>(null);
   const pw = useRef<HTMLInputElement>(null);
-  const { logged, setLogged, setUser } = useContext(LoginContext);
+  const { setLogged, setUser } = useContext(LoginContext);
   const [valid, setValid] = useState<boolean>(false);
 
   const auth = async () => {

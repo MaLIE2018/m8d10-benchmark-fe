@@ -19,4 +19,18 @@ export interface uploadAccommodation {
   location: string;
   description: string;
   maxGuests: number;
+  owner: string;
 }
+
+export interface Destination {
+  location: string;
+  _id?: string;
+}
+
+export const initialUser = {
+  _id: "",
+  name: "",
+  email: "",
+  password: "",
+  role: "",
+};

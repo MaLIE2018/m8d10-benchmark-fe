@@ -7,10 +7,11 @@ import { LoginContext } from "./components/LoginContext";
 import MyAccommodations from "./components/MyAccommodations";
 import NavBar from "./components/NavBar";
 import Welcome from "./components/Welcome";
+import { MyContainer } from "./globalstyles/styles";
 import { getRequest } from "./lib/axios";
 
 function App() {
-  const { logged, setLogged, setUser, user } = useContext(LoginContext);
+  const { logged, setLogged, setUser } = useContext(LoginContext);
 
   const isLogged = async () => {
     try {
@@ -35,9 +36,12 @@ function App() {
     <Router>
       <NavBar />
       {!logged && <Redirect to='/welcome/login' />}
-      <Route path='/welcome/login' exact component={Welcome} />
-      <Route path='/accommodations' exact component={Inside} />
-      <Route path='/accommodations/me' exact component={MyAccommodations} />
+      {logged && <Redirect to='/accommodations' />}
+      <MyContainer>
+        <Route path='/welcome/login' exact component={Welcome} />
+        <Route path='/accommodations' exact component={Inside} />
+        <Route path='/accommodations/me' exact component={MyAccommodations} />
+      </MyContainer>
       <AddAccommodation />
     </Router>
   );

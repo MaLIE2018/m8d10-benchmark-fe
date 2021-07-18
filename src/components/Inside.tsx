@@ -1,41 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { Col, Container, ListGroup, Row } from "react-bootstrap";
-import { getRequest } from "../lib/axios";
+import { Col, Row } from "react-bootstrap";
 import { Accommodation } from "../types";
-const Inside = () => {
-  const [accs, setAccs] = useState<Accommodation[] | []>([]);
+import AccList from "./AccList/AccList";
+import withSubscription from "./hoc/withSubscription";
 
-  const getAccs = async () => {
-    try {
-      const res = await getRequest("accommodation");
-      if (res.status === 200) {
-        setAccs(res.data);
-      }
-    } catch (error) {}
-  };
-  useEffect(() => {
-    getAccs();
-  }, []);
+const Inside = ({ accs }: { accs: Accommodation[] }) => {
   return (
-    <Container fluid='md'>
+    <>
       <Row>
         <Col>
           <h1>Accommodations</h1>
         </Col>
       </Row>
       <Row>
-        <ListGroup>
-          {accs.map((acc) => (
-            <ListGroup.Item>
-              {acc.name}
-              {acc.description}
-              {acc.location.location}
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
+        <Col>
+          <AccList accommodations={accs} />
+        </Col>
       </Row>
-    </Container>
+    </>
   );
 };
 
-export default Inside;
+export default withSubscription(Inside, "accommodation");

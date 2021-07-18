@@ -5,4 +5,5 @@ export const AccommodationSchema = Yup.object().shape({
   location: Yup.string().required("Required"),
   description: Yup.string().required("Required"),
   maxGuests: Yup.number().required("Required"),
+  owner: Yup.string(),
 });
