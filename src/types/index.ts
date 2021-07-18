@@ -13,3 +13,10 @@ export interface Accommodation {
   description: string;
   maxGuests: number;
 }
+
+export interface uploadAccommodation {
+  name: string;
+  location: string;
+  description: string;
+  maxGuests: number;
+}

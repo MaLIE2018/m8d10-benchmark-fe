@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 
 import { getRequest } from "../lib/axios";
 import { LoginContext } from "./LoginContext";
@@ -28,7 +28,9 @@ const NavBar: React.FC<RouteComponentProps> = ({ history }) => {
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className='ml-auto d-flex align-items-center'>
             {user?.role === "host" && (
-              <Nav.Link href='/accommodation/me'>My acs</Nav.Link>
+              <Nav.Link as={Link} to='/accommodations/me'>
+                My acs
+              </Nav.Link>
             )}
             {!logged ? (
               <>

@@ -12,7 +12,6 @@ const SignUp: React.FC<RouteComponentProps> = ({ history }) => {
   const { setNewCustomer } = useContext(LoginContext);
   const signUp = async (user: User) => {
     try {
-      console.log("user:", user);
       const res = await postRequest("users/register", user);
       if (res.status === 200) {
       }
